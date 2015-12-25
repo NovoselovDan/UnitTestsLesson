@@ -31,7 +31,8 @@
 
 - (void)takeMoney:(NSNumber *)amount
 {
-    //...
+    _totalAmount = @(_totalAmount.floatValue + amount.floatValue);
+    [self payTaxes];
 }
 
 - (void)setCurrentSalary:(NSNumber *)currentSalary
@@ -43,7 +44,7 @@
 }
 
 - (void)payTaxes {
-    //...
+    [_taxesProvider baseTaxes];
 }
 
 @end

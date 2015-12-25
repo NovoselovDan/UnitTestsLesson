@@ -50,11 +50,11 @@ describe(@"my tests", ^{
         TUSCompany *company = [TUSCompany new];
         
         id mock = OCMPartialMock(employee);
-        
+        id protocolMock = OCMProtocolMock(@protocol(TUSTaxesProvider));
         OCMExpect([mock payTaxes]);
         
         [company payToEmployee:mock];
-        
+    
         OCMVerifyAllWithDelay(mock, 0.5);
     });
 
