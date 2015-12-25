@@ -13,7 +13,10 @@
 
 - (void)payToEmployee:(TUSEmployee *)employee {
     [employee takeMoney:employee.currentSalary ];
-    //...
+    NSDecimalNumber *taxValue = [NSDecimalNumber numberWithFloat:[[_taxesProvider retireInsuranceTaxes] floatValue] * [employee.currentSalary floatValue]];
+    
+    _totalAmount = [NSNumber numberWithFloat:_totalAmount.floatValue - employee.currentSalary.floatValue - taxValue.floatValue];
+    [_taxman receiveTaxes:taxValue sender:self];
 }
 
 @end

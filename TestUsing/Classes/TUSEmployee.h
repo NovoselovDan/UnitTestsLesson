@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "TUSTaxesProvider.h"
+#import "TUSTaxman.h"
 
-@class TUSTaxman;
+//@class TUSTaxman;
 
 @interface TUSEmployee : NSObject
 

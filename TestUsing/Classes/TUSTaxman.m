@@ -11,7 +11,12 @@
 @implementation TUSTaxman
 
 - (void)receiveTaxes:(NSDecimalNumber *)taxes sender:(id)sender {
-    //...
+    if (!_records)
+        _records = [NSDictionary new];
+    
+    NSMutableDictionary *tmpRecords = [_records mutableCopy];
+    [tmpRecords setObject:taxes forKey:[[NSDateFormatter new] stringFromDate:[NSDate date]]];
+    _records = [tmpRecords copy];
 }
 
 @end

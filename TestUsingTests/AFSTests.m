@@ -28,6 +28,9 @@ describe(@"my tests", ^{
    
     beforeEach(^{
         employee = [TUSEmployee new];
+        id protocolMock = OCMProtocolMock(@protocol(TUSTaxesProvider));
+        [OCMStub([protocolMock baseTaxes]) andReturn:@0.13];
+        [OCMStub([protocolMock retireInsuranceTaxes]) andReturn:@0.30];
     });
 
     it(@"returns best salary", ^{
@@ -50,12 +53,26 @@ describe(@"my tests", ^{
         TUSCompany *company = [TUSCompany new];
         
         id mock = OCMPartialMock(employee);
-        id protocolMock = OCMProtocolMock(@protocol(TUSTaxesProvider));
         OCMExpect([mock payTaxes]);
         
         [company payToEmployee:mock];
     
         OCMVerifyAllWithDelay(mock, 0.5);
+    });
+    
+    it(@"check taxes", ^{
+        TUSCompany *company = [TUSCompany new];
+        company.totalAmount = @500;
+        
+        employee.currentSalary = @10;
+        employee.totalAmount = @0;
+        
+        TUSTaxman *taxman = [TUSTaxman new];
+        company.taxman = taxman;
+        employee.taxman = taxman;
+        
+        [company payToEmployee:employee];
+        expect(taxman.records.count).beGreaterThan(0);
     });
 
     
